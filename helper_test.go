@@ -56,3 +56,31 @@ func TestIssueJWT(t *testing.T) {
 		t.Errorf("expect %d, got %d", h.TokenExpire, tokenExp)
 	}
 }
+
+func TestGetLineJWTFromFile(t *testing.T) {
+	h := New("line-test")
+	jwt, err := h.GetLineJWTFromFile("./testdata/privateKey.json")
+	parsed, err := jose.ParseSigned(jwt)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(parsed.Signatures) != 1 {
+		t.Fatal("Too many or too few signatures.")
+	}
+	sig := parsed.Signatures[0]
+
+	if "536e453c-aa93-4449-8e90-add2608783c6" != sig.Header.KeyID {
+		t.Error("invalid KeyID")
+	}
+	if "RS256" != sig.Header.Algorithm {
+		t.Error("invalid Algorithm")
+	}
+
+	if typ, ok := sig.Header.ExtraHeaders["typ"]; ok {
+		if "JWT" != typ {
+			t.Fatal("typ should be 'JWT'")
+		}
+	} else {
+		t.Fatal("typ should in header")
+	}
+}
