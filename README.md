@@ -9,7 +9,10 @@
 ## Introduction
 helper to generate line oauth2 v2.1 access token
 
+## Install
+
+`% go get github.com/clsung/line-oauth2-helper/cmd/line_jwt`
 
 ## Usage
 
-`% cd cmd/line_jwt/; go build & ./line_jw -file ${LINE_PRIVATEKEY_FILE} -channel_id ${CHANNEL_ID}` 
+`% line_jwt -file ${LINE_PRIVATEKEY_FILE} -channel_id ${CHANNEL_ID}`
