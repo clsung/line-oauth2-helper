@@ -15,4 +15,18 @@ helper to generate line oauth2 v2.1 access token
 
 ## Usage
 
+### Command line
+
 `% line_jwt -file ${LINE_PRIVATEKEY_FILE} -channel_id ${CHANNEL_ID}`
+
+### Docker
+
+Pull the image:
+
+`% docker pull clsung/line-oauth2-helper`
+
+then run the following
+
+`% docker run -ti -p 8080:8080 clsung/line-oauth2-helper`
+
+and connect to http://localhost:8080/
