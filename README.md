@@ -7,7 +7,7 @@
 
 
 ## Introduction
-Helper to [generate LINE OAuth2 v2.1 JSON Web Token (JWT)](https://developers.line.biz/en/docs/messaging-api/generate-json-web-token/)
+Helper to [generate LINE JSON Web Token (JWT)](https://developers.line.biz/en/docs/messaging-api/generate-json-web-token/) for LINE OAuth2 v2.1.
 
 ## Install
 
