@@ -19,6 +19,10 @@ helper to generate line oauth2 v2.1 access token
 
 `% line_jwt -file ${LINE_PRIVATEKEY_FILE} -channel_id ${CHANNEL_ID}`
 
+or
+
+`% line_jwt -channel_id ${CHANNEL_ID} < {LINE_PRIVATEKEY_FILE}`
+
 ### Docker
 
 Pull the image:
