@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>LINE JWT Generator</title>
+    <meta charset="utf-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script type="text/javascript">
+$(document).ready(function()  {
+	$("#submit").click(function(e) {
+		e.preventDefault();
+		var form = $('form')[0];
+		var formData = new FormData(form);
+		$.ajax({
+			type: "POST",
+			dataType: "text",
+			processData: false,
+			contentType: false,
+			url: "/gen",
+			data: formData,
+			success: function (dataResult) {
+				$('.jwt').val(dataResult);
+			},
+			error: function (XMLHttpRequest, textStatus, errorThrown) {
+				alert(textStatus)
+			}
+		});
+	});
+});
+	</script>
+	<style type="text/css">
+	input {
+		text-align: right;
+	}
+	textarea {
+		width: 300px;
+	}
+	</style>
+</head>
+<body>
+<h1>Generate JWT for LINE Channel access token v2.1</h1>
+
+<p> Reference:
+<ul>
+	<li><a href="https://developers.line.biz/en/news/2020/04/06/channel-access-token-apis-v2-1/">News: Channel access token v2.1 released</a></li>
+	<li><a href="https://developers.line.biz/en/docs/messaging-api/generate-json-web-token/">Generate a JSON Web Token (JWT) from an Assertion Signing Key</a></li>
+</ul></p>
+<p> Upload file and LINE Channel ID to generate <a href="https://developers.line.biz/en/docs/messaging-api/generate-json-web-token/">short-lived JWT</a> for access token </p>
+
+<form id="idForm" method="post" enctype="multipart/form-data">
+	<table>
+		<tr><th> Field </th><th> Value </th> <th> Description </th></tr>
+		<tr><td>Channel: </td><td><input type="text" name="channelId" value=""> </td>
+		<tr><td>Expiry: </td><td><input type="text" name="expiry" value="30"> minutes </td>
+			<td>The expiry date of the JWT. Set this value in minutes. The max lifetime of a JWT Assertion is 30 minutes.</td></tr>
+		<tr><td>Token Expire: </td><td><input type="text" name="tokenExp" value="86400"> seconds</td>
+			<td>Required when requesting a channel access token. This represents a valid expiration time for the channel access token in seconds. The max lifetime of a channel access token is 30 days.</td></tr>
+		<tr><td>File: </td><td><input type="file" name="file"></td><td>Private key file which download from LINE developer console</td></tr>
+		<tr><td colspan="3">or just paste json data here: </td></tr>
+		<tr><td>PrivKey JSON</td><td colspan="2"><textarea name="content" wrap="off" rows="16" cols="60"> </textarea></td></tr>
+		<tr><td>JWT generated</td><td colspan="2"><textarea class="jwt" rows="5" cols="60" onclick="this.focus();this.select()" readonly> </textarea></td></tr>
+	</table>
+	<button id="submit" type="button">Submit</button>
+</form>
+</body>
