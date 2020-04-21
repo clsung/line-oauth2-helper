@@ -15,22 +15,28 @@ Helper to [generate LINE JSON Web Token (JWT)](https://developers.line.biz/en/do
 
 ## Usage
 
-### Command line
+#### Command line
 
 `% line_jwt -file ${LINE_PRIVATEKEY_FILE} -channel_id ${CHANNEL_ID}`
 
 or
 
-`% line_jwt -channel_id ${CHANNEL_ID} < {LINE_PRIVATEKEY_FILE}`
+`% line_jwt -channel_id ${CHANNEL_ID} < ${LINE_PRIVATEKEY_FILE}`
 
 ### Docker
 
 Pull the image:
 
-`% docker pull clsung/line-oauth2-helper`
+`% docker pull clsung/line-oauth2-helper:stable`
+
+#### Web version
 
 then run the following
 
-`% docker run -ti -p 8080:8080 clsung/line-oauth2-helper`
+`% docker run -ti -p 8080:8080 clsung/line-oauth2-helper:stable`
 
 and connect to http://localhost:8080/
+
+#### Command line
+
+`% docker run -i clsung/line-oauth2-helper:stable line_jwt -channel_id ${CHANNEL_ID} < ${LINE_PRIVATEKEY_FILE}`

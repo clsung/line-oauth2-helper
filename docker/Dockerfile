@@ -2,9 +2,8 @@ FROM golang:1.14-alpine as builder
 
 RUN apk update && apk upgrade && \
     apk add --no-cache ca-certificates bash git
-RUN go get github.com/clsung/line-oauth2-helper
-RUN go get github.com/clsung/line-oauth2-helper/cmd/line_jwt && \
-    go get github.com/clsung/line-oauth2-helper/cmd/ljwt_server
+RUN go get github.com/clsung/line-oauth2-helper/cmd/ljwt_server && \
+    go get github.com/clsung/line-oauth2-helper/cmd/line_jwt
 
 FROM alpine:3.11
 
