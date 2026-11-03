@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"testing"
 
-	"gopkg.in/square/go-jose.v2"
+	"github.com/go-jose/go-jose/v4"
 )
 
 func TestIssueJWT(t *testing.T) {
@@ -21,7 +21,7 @@ func TestIssueJWT(t *testing.T) {
 	if err != nil {
 		t.Error("error on generate JWT", err)
 	}
-	parsed, err := jose.ParseSigned(jwt)
+	parsed, err := jose.ParseSigned(jwt, []jose.SignatureAlgorithm{jose.RS256})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -60,7 +60,7 @@ func TestIssueJWT(t *testing.T) {
 func TestGetLineJWTFromFile(t *testing.T) {
 	h := New("line-test")
 	jwt, err := h.GetLineJWTFromFile("./testdata/privateKey.json")
-	parsed, err := jose.ParseSigned(jwt)
+	parsed, err := jose.ParseSigned(jwt, []jose.SignatureAlgorithm{jose.RS256})
 	if err != nil {
 		t.Fatal(err)
 	}
