@@ -39,7 +39,7 @@ func main() {
 		h := helper.New(channelID).WithExpiry(time.Duration(expiry) * time.Minute).WithTokenExpire(tokenExp)
 
 		var jwt string
-		file, err := c.FormFile("file")
+		fileHeader, err := c.FormFile("file")
 		if err != nil {
 			if err != http.ErrMissingFile {
 				c.String(http.StatusBadRequest, fmt.Sprintf("get form err: %s", err.Error()))
@@ -47,7 +47,13 @@ func main() {
 			}
 			jwt, err = h.GetLineJWT(strings.NewReader(jsonContent))
 		} else {
-			jwt, err = h.GetLineJWTFromFile(file.Filename)
+			file, openErr := fileHeader.Open()
+			if openErr != nil {
+				c.String(http.StatusBadRequest, fmt.Sprintf("open upload err: %s", openErr.Error()))
+				return
+			}
+			defer file.Close()
+			jwt, err = h.GetLineJWT(file)
 		}
 		if err != nil {
 			c.String(http.StatusBadRequest, fmt.Sprintf("generate JWT err: %s", err.Error()))
